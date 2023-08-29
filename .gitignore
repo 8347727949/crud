@@ -1,0 +1,8 @@
+crud/__pycache__/*.pyc
+crud_app/__pycache__/*.pyc
+crud_app/migrations/__pycache__/*.pyc
+images/__pycache__/*.pyc
+images/migrations/__pycache__/*.pyc
+subject_app/__pycache__/*.pyc
+subject_app/migrations/__pycache__/*.pyc
+admin/__pycache__/*.pyc
