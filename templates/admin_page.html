@@ -1,0 +1,26 @@
+
+
+
+    <!-- name=models.CharField(max_length=50)
+    hotel_Main_Img = models.ImageField(upload_to='media') -->
+
+    <title>Admin Page</title>  
+    {% load static %}
+    <link  href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet"/>  
+  
+   
+   
+</head>  
+<body>  
+  <div class="container">  
+    <h1>Admin Panel</h1><br><br>
+<form method="POST" class="post-form" action="">  
+        {% csrf_token %}  
+    <div class="container">  
+         
+          </div>   
+           <a href="/hello/hello/showdata"> <imput type="button" class="btn btn-primary">Student Details</button></a>
+
+            <a href="/subject_showdata"> <imput type="button" class="btn btn-primary">Subject Details</button></a>
+              <a href="/hotel_images"> <imput type="button" class="btn btn-primary">Image Details</button></a>
+            </form>         

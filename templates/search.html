@@ -1,0 +1,123 @@
+<style>
+   
+
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+    
+    html {
+      font-family: "Open Sans", sans-serif;
+    }
+    
+    h1 {
+      color: #444;
+    }
+    
+     .btn {
+        padding: 1em 2.1em 1.1em;
+        border-radius: 3px;
+        margin: 8px 8px 8px 8px;
+        color: #fbdedb;
+        background-color: #fbdedb;
+        display: inline-block;
+        background: #e74c3c;
+        -webkit-transition: 0.3s;
+        -moz-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        font-family: sans-serif;
+        font-weight: 800;
+        font-size: .85em;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+        -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+        position: relative;
+    }
+    .btn:hover, .btn:focus {
+        opacity: 0.8;
+    }
+    .btn:active {
+        -webkit-transform: scale(0.80);
+        -moz-transform: scale(0.80);
+        -ms-transform: scale(0.80);
+        -o-transform: scale(0.80);
+        transform: scale(0.80);
+    }
+    .btn.block {
+        display: block !important;
+    }
+    .btn.circular {
+      border-radius: 50em !important;
+    }
+    
+    
+    
+    .red {
+        background-color: #d55050;
+    }
+    .thead 
+    {
+        background-color:#1616ba;
+        color: white;
+        text-align: center;
+    }
+    .tbody
+    {
+        background-color:#edba93;
+        border:2px solid red
+    }
+    .back 
+    {
+        text-decoration: none;
+    }
+    table 
+    {
+        margin-left:50px
+    }
+    .back 
+    {
+        margin-left:50px
+    }
+        </style>
+    <body>
+        <!-- <form method="get" action="/search">
+        <center><input type="text" name="search" id="search" placeholder="search...">
+            <input type="reset" value="❌">
+        <input type="submit" name="check" value="search"/ ></center><br><br>
+        </form> -->
+        <h1>Search Result</h1>
+    <table border="2px solid black">
+        <thead class="thead">
+            <tr>
+                <!-- <td>Roll No</td> -->
+                <td>Student Name:</td>
+                <td>Course Name:</td>
+                <td>Enrollment No</td>
+                <td>Div</td>
+                <td>Group No</td>
+                <td>Project Details</td>
+                <!-- <td>Action</td> -->
+            </tr>
+        </thead>
+        <tbody class="tbody">
+            {% for stu in students%}
+            <tr>
+                <td>{{stu.rollno}}</td>
+                <td>{{stu.name}}</td>
+                <td>{{stu.enrollment}}</td>
+                <td>{{stu.div}}</td>
+                <td>{{stu.groupno}}</td>
+                <td>{{stu.project_detail}}</td>
+              
+                   
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<!--     
+    <a href='/hello/' class="back">BACK</a> -->
+    </body><style>
+   
+
