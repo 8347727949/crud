@@ -580,8 +580,8 @@ def store_provisional(request):
             else:  
                 messages.warning(request, 'Request Not Added...',fail_silently=True)
                 return HttpResponseRedirect(request.path_info) 
-    #return render(request,'show_provisional.html',{'form':form})  
-    return redirect('/add_provisional')
+    return render(request,'show_provisional.html',{'form':form})  
+    #return redirect('/add_provisional')
     
 
 
@@ -599,6 +599,24 @@ def show_provisional(request):
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
     return render(request,'hod_view_provisional_request.html',{'students':students})
+    return render(request,'view_provisional_request.html',{'students':students})
+
+def view_provisional_request(request):
+    # students=Request_provisional.objects.all()
+    # return render(request,'show_provisional.html',{'students':students})
+    request_list = Request_provisional.objects.all().order_by('enrollment')
+    paginator = Paginator(request_list, 3)
+    try:
+        page = int(request.GET.get('page','1'))
+    except:
+        page = 1     
+    try:
+        students = paginator.page(page)
+    except(Paginator.EmptyPage , Paginator.InvalidPage):
+        students = paginator.page(paginator.num_pages)  
+    # return render(request,'hod_view_provisional_request.html',{'students':students})
+    return render(request,'view_provisional_request.html',{'students':students})
+
 
 
 def delete_provisional(request, id):  
@@ -607,17 +625,22 @@ def delete_provisional(request, id):
     messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
     return redirect("/show_provisional")
 
+def delete_provisional1(request, id):  
+    program_list = Request_provisional.objects.get(id=id)  
+    program_list.delete()
+    messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
+    return redirect("/view_provisional_request")
+
 
 
 def add_final_result(request):
-    
-     return render(request,'send_final_result_request.html')
+    return render(request,'send_final_result_request.html')
      
 
          
 def store_final_result(request):
-  
     form = Request_final_result_Form(request.POST) 
+
     try:
         student_data = Request_final_result.objects.get(enrollment=request.POST.get('enrollment',False))
         messages.success(request, 'Request Send Successfully',fail_silently=True) 
@@ -644,8 +667,8 @@ def store_final_result(request):
 
 
 def show_final_result(request):
-    # students=Request_provisional.objects.all()
-    # return render(request,'show_provisional.html',{'students':students})
+    # students=Request_final_result.objects.all()
+    # return render(request,'hod_view_final_result_request.html',{'students':students})
     request_list = Request_final_result.objects.all().order_by('enrollment')
     paginator = Paginator(request_list, 3)
     try:
@@ -653,10 +676,24 @@ def show_final_result(request):
     except:
         page = 1     
     try:
-        students1 = paginator.page(page)
+        students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
-        students1 = paginator.page(paginator.num_pages)  
-    return render(request,'hod_view_final_result_request.html',{'students1':students1})
+        students = paginator.page(paginator.num_pages)  
+    return render(request,'hod_view_final_result_request.html',{'students':students})
+
+
+def view_final_result_request(request):
+    request_list = Request_final_result.objects.all().order_by('enrollment')
+    paginator = Paginator(request_list, 3)
+    try:
+        page = int(request.GET.get('page','1'))
+    except:
+        page = 1     
+    try:
+        students = paginator.page(page)
+    except(Paginator.EmptyPage , Paginator.InvalidPage):
+        students = paginator.page(paginator.num_pages)  
+    return render(request,'view_final_result_request.html',{'students':students})
 
 
 def delete_final_result(request, id):  
@@ -665,8 +702,98 @@ def delete_final_result(request, id):
     messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
     return redirect("/show_final_result")
 
+def delete_final_result1(request, id):  
+    program_list = Request_final_result.objects.get(id=id)  
+    program_list.delete()
+    messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
+    return redirect("/view_final_result_request")
+
+
+
+
+
+
+
+def add_bonafide(request):
+    return render(request,'send_bonafide_request.html')
+     
+
+def store_bonafide(request):
+    form = Request_bonafide_Form(request.POST) 
+    try:
+        student_data = Request_bonafide.objects.get(enrollment=request.POST.get('enrollment',False))
+        messages.success(request, 'Request Send Successfully',fail_silently=True) 
+    except Request_bonafide.DoesNotExist:
+        student_data = None  
+    if student_data:
+        messages.warning(request, 'Request Already Exist...',fail_silently=True)
+        return HttpResponseRedirect(request.path_info) 
+    else: 
+        if request.method == "POST":   
+            if form.is_valid():  
+                try:  
+                    form.save()
+                    messages.success(request, 'Request send Successfully',fail_silently=True)
+                    return HttpResponseRedirect(request.path_info)  
+                except:  
+                    pass  
+            else:  
+                messages.warning(request, 'Request Not Added...',fail_silently=True)
+                return HttpResponseRedirect(request.path_info) 
+    #return render(request,'show_provisional.html',{'form':form})  
+    return redirect('/add_bonafide')
+    
+
+
+def show_bonafide(request):
+    # students=Request_final_result.objects.all()
+    # return render(request,'hod_view_bonafide_request.html',{'students':students})
+    request_list = Request_bonafide.objects.all().order_by('enrollment')
+    paginator = Paginator(request_list, 3)
+    try:
+        page = int(request.GET.get('page','1'))
+    except:
+        page = 1     
+    try:
+        students = paginator.page(page)
+    except(Paginator.EmptyPage , Paginator.InvalidPage):
+        students = paginator.page(paginator.num_pages)  
+    return render(request,'hod_view_bonafide_request.html',{'students':students})
+
+
+def view_bonafide_request(request):
+    request_list = Request_bonafide.objects.all().order_by('enrollment')
+    paginator = Paginator(request_list, 3)
+    try:
+        page = int(request.GET.get('page','1'))
+    except:
+        page = 1     
+    try:
+        students = paginator.page(page)
+    except(Paginator.EmptyPage , Paginator.InvalidPage):
+        students = paginator.page(paginator.num_pages)  
+    return render(request,'view_bonafide_request.html',{'students':students})
+
+
+
+def delete_bonafide(request, id):  
+    program_list = Request_bonafide.objects.get(id=id)  
+    program_list.delete()
+    messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
+    return redirect("/show_bonafide")
+
+def delete_bonafide1(request, id):  
+    program_list = Request_bonafide.objects.get(id=id)  
+    program_list.delete()
+    messages.success(request, 'Request Deleted Successfully',fail_silently=True)  
+    return redirect("/view_bonafide_request")
+
+
 
 def demo(request):
      return render(request,'demo.html')
+
+def main_hod(request):
+     return render(request,'main_hod.html')
 
 

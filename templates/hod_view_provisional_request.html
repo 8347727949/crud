@@ -73,8 +73,10 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                   
+                    <a href="main_hod" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Provisional Result</a>
+                    <a href="show_final_result" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Final Result</a>
+                    <a href="show_bonafide" class="nav-item nav-link" style="font-size: 14px;"><i class="fa fa-tachometer-alt me-2"></i>Bonafide Certificate</a>
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -184,7 +186,7 @@
                                                                 <th>Course Name</th>
                                                                 <th>Semester</th>
                                                                 <th>Name </th>
-                                                                <th>Email</th>
+                                                              
                                                                 <th>Div</th>
                                                                 <th>Enrollment NO</th>
                                                                 <th>Semester for Provisional Result</th>
@@ -195,14 +197,12 @@
                                                         
                                                         <tbody>
                                         
-                                                                {% for i in students1 %}
+                                                                {% for i in students %}
                                                                 <tr> 
                                                                     <td>{{i.c_name}}</td>
                                                                     <td>{{i.sem}}</td>
                                                                     <td>{{i.name}}</td>
-                                                                     {% if user.is_authenticated %} 
-                                                                    <td>{{ user.email }}</td>
-                                                                    {%endif%}
+                                                                     
                                                                     <td>{{i.div}}</td>
                                                                     <td>{{i.enrollment}}</td>
                                                                     <td>{{i.sem_pro}}</td>
@@ -232,7 +232,7 @@
                                                             {% endif %}
                                                             {% endfor %}
                                                             {% if students.has_next %}
-                                                                <li><a href="?page={{ students.next_page_number }}"> Next </a> </li>
+                                                                <li><a href="?page={{ students.next_page_number }}">&nbsp;&nbsp; Next </a> </li>
                                                             {% endif %}
                                                     </div>
                                                 </div>

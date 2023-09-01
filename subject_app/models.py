@@ -77,7 +77,22 @@ class Request_final_result(models.Model):
     name=models.CharField(max_length=100)
     div=models.CharField(max_length=100)
     enrollment=models.IntegerField()
-    # sem_pro1=models.IntegerField()
+    sem_pro1=models.IntegerField(default=1)
    
     class meta:
         db_table=('Request_final_result')
+
+
+
+
+class Request_bonafide(models.Model):
+    
+    c_name=models.CharField(max_length=100)
+    sem=models.IntegerField()
+    name=models.CharField(max_length=100)
+    div=models.CharField(max_length=100)
+    enrollment=models.IntegerField()
+    reason=models.CharField(max_length=500,default='yash')
+   
+    class meta:
+        db_table=('Request_bonafide')

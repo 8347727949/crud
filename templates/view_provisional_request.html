@@ -572,6 +572,7 @@
   display: none;
   position: absolute;
   background-color: #f9f9f9;
+  border:2px solid blue;
   min-width: 450px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
@@ -589,6 +590,37 @@
    padding:5px;
    color:white;
 }
+
+.dropdown1 {
+  position: relative;
+  display: inline-block;
+  font-size:20px;
+ 
+}
+
+.dropdown1-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border:2px solid blue;
+  min-width: 350px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+ 
+}
+
+.dropdown1:hover .dropdown1-content1 {
+  display: block;
+  /* background-color:black; */
+}
+.dropdown1:hover .dropbtn1
+{
+   background-color:brown;
+   padding:5px;
+   color:white;
+}
+
 
 .b  
  {
@@ -638,17 +670,17 @@
                   <div class="dropdown">
                
        
-            {% if user.is_authenticated %}
-            <div class="dropdown">
-                  
-               <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
-               <div class="dropdown-content">
-               
-    <a href="/logout/">Logout</a>
-    {% else %}
-    
-      <a href="/login/">Login</a>
-    {% endif %}
+                     {% if user.is_authenticated %}
+                     <div class="dropdown1" >
+                           
+                        <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
+                        <div class="dropdown1-content1">
+                        
+             <a href="/logout/">Logout</a>
+             {% else %}
+             
+               <a href="/login/">Login</a>
+             {% endif %}
                        </nav>
             
   
@@ -671,15 +703,15 @@
                     
               
                 </div>
-                <h3 class="box-title">Request Records Provisional Result</h3>
-                <div class="table-responsive">
+      
+                  <h1 class="box-title" style="margin-left:500px;"><ul>Request Records Provisional Result</ul></h1><br>
+                  <div class="table-responsive" style="margin-left:100px;">
                     <table class="table program-list"> 
                         <thead>
                             <tr>
                                 <th>Course Name</th>
                                 <th>Semester</th>
                                 <th>Name </th>
-                                <th>Email</th>
                                 <th>Div</th>
                                 <th>Enrollment NO</th>
                                 <th>Semester for Provisional Result</th>
@@ -695,17 +727,13 @@
                                     <td>{{i.c_name}}</td>
                                     <td>{{i.sem}}</td>
                                     <td>{{i.name}}</td>
-                                     {% if user.is_authenticated %} 
-                                    <td>{{ user.email }}</td>
-                                    {%endif%}
                                     <td>{{i.div}}</td>
                                     <td>{{i.enrollment}}</td>
                                     <td>{{i.sem_pro}}</td>
                                     <td>{{i.reason}}</td>
                                      <td>  
-                                        <a href="show_provisional" class="btn btn-success" style="width:150px;">Accept Request</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              
-                                <a href="/delete_provisional/{{i.id}}" class="btn btn-danger" style="width:150px;">Cancel Request</a>
+                                        
+                                <a href="/delete_provisional1/{{i.id}}" class="btn btn-danger" style="width:200px; background-color:blue;">Cancel Request</a>
                                         
                                     </td>
                                 </tr>  
@@ -715,21 +743,21 @@
                         </tbody>
                     </table>
                     </div>
-                     <div class="pagination">
-                            {% if students.has_previous %}
-                                <li><a href="?page={{ students.previous_page_number }}">Previous </a></li>
-                            {% endif %}
-                            {% for pg in posts.paginator.page_range %}
-                            {% if students.number == pg %}
-                                <li class="active"><a href="?page={{ pg }}">{{ pg }}</a></li>
-                            {% else %}
-                                <li><a href="?page={{ pg }}">{{ pg }}</a><li>
-                            {% endif %}
-                            {% endfor %}
-                            {% if students.has_next %}
-                                <li><a href="?page={{ students.next_page_number }}"> Next </a> </li>
-                            {% endif %}
-                    </div>
+                    <div class="pagination" style="margin-left:100px;">
+                     {% if students.has_previous %}
+                         <li><a href="?page={{ students.previous_page_number }}">&nbsp;&nbsp;Previous </a></li>
+                     {% endif %}
+                     {% for pg in students.paginator.page_range %}
+                     {% if students.number == pg %}
+                         <li class="active"><a href="?page={{ pg }}">&nbsp;&nbsp;{{ pg }}</a></li>
+                     {% else %}
+                         <li><a href="?page={{ pg }}">&nbsp;&nbsp;{{ pg }}</a><li>
+                     {% endif %}
+                     {% endfor %}
+                     {% if students.has_next %}
+                         <li ><a href="?page={{ students.next_page_number }}">&nbsp;&nbsp; Next </a> </li>
+                     {% endif %}
+             </div>
                 </div>
             </div>
         </div>

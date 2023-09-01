@@ -72,10 +72,13 @@
                         <span>HOD</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
-                    <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                   
-            </nav>
+               
+                    <div class="navbar-nav w-100">
+                        <a href="main_hod" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Provisional Result</a>
+                        <a href="show_final_result" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Final Result</a>
+                        <a href="show_bonafide" class="nav-item nav-link" style="font-size: 14px;"><i class="fa fa-tachometer-alt me-2"></i>Bonafide Certificate</a>
+                </nav>
         </div>
         <!-- Sidebar End -->
 
@@ -166,8 +169,9 @@
                     
                                             </ol>
                                         </div>
+                                        <h1>Welcome to HOD Site</h1>
                                         <!-- /.col-lg-12 -->
-                                        {% include "alert.html" %}
+                                        <!-- {% include "alert.html" %}
                                         <div class="row">
                                         <div class="col-md-12 col-lg-12 col-sm-12">
                                             <div class="white-box">
@@ -184,6 +188,7 @@
                                                                 <th>Course Name</th>
                                                                 <th>Semester</th>
                                                                 <th>Name </th>
+                                                                
                                                                 <th>Div</th>
                                                                 <th>Enrollment NO</th>
                                                                 <th>Semester for Provisional Result</th>
@@ -215,7 +220,7 @@
                                                             {% endfor %}  
                                                         </tbody>
                                                     </table>
-                                                    </div>
+                                                    </div> -->
                                                      <div class="pagination">
                                                             {% if students.has_previous %}
                                                                 <li><a href="?page={{ students.previous_page_number }}">Previous </a></li>

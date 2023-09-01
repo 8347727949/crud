@@ -40,6 +40,12 @@ class Request_final_result_Form(forms.ModelForm):
         model = Request_final_result
         fields = "__all__"  
 
+
+class Request_bonafide_Form(forms.ModelForm):  
+    class Meta:  
+        model = Request_bonafide
+        fields = "__all__"  
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
     class Meta:

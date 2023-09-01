@@ -80,17 +80,27 @@ urlpatterns = [
    
 
      path('hod_login',views.hod_login),
+      path('main_hod',views.main_hod),
 
      path('add_provisional',views.add_provisional),
       path('store_provisional',views.store_provisional),
        path('show_provisional',views.show_provisional),
        path('delete_provisional/<int:id>',views.delete_provisional),
+    path('delete_provisional1/<int:id>',views.delete_provisional1),
 
 
        path('add_final_result',views.add_final_result),
-      path('store_final_result',views.store_final_result),
+       path('store_final_result',views.store_final_result),
        path('show_final_result',views.show_final_result),
        path('delete_final_result/<int:id>',views.delete_final_result),
+       path('delete_final_result1/<int:id>',views.delete_final_result1),
+
+
+       path('add_bonafide',views.add_bonafide),
+       path('store_bonafide',views.store_bonafide),
+       path('show_bonafide',views.show_bonafide),
+       path('delete_bonafide/<int:id>',views.delete_bonafide),
+        path('delete_bonafide1/<int:id>',views.delete_bonafide1),
 
     
 

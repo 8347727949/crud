@@ -73,8 +73,13 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                   
+                    <!-- <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a> -->
+                    <div class="navbar-nav w-100">
+                        <a href="main_hod" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="show_provisional" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Provisional Result</a>
+                        <a href="show_final_result" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Final Result</a>
+                        <a href="show_bonafide" class="nav-item nav-link" style="font-size: 14px;"><i class="fa fa-tachometer-alt me-2"></i>Bonafide Certificate</a>
+                </nav>
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -176,7 +181,7 @@
                                                     
                                               
                                                 </div>
-                                                <h3 class="box-title">Request Records Provisional Result</h3>
+                                                <h3 class="box-title">Request Records Bonafide</h3>
                                                 <div class="table-responsive">
                                                     <table class="table program-list"> 
                                                         <thead>
@@ -184,10 +189,11 @@
                                                                 <th>Course Name</th>
                                                                 <th>Semester</th>
                                                                 <th>Name </th>
+                                                              
                                                                 <th>Div</th>
                                                                 <th>Enrollment NO</th>
-                                                                <th>Semester for Provisional Result</th>
-                                                                <th>Reason for Provisional Result</th>
+                                                                <th>Reason</th>
+                                                             
                                                                 <th>Actions</th>
                                                             </tr>
                                                         </thead>
@@ -199,14 +205,15 @@
                                                                     <td>{{i.c_name}}</td>
                                                                     <td>{{i.sem}}</td>
                                                                     <td>{{i.name}}</td>
+                                                                  
                                                                     <td>{{i.div}}</td>
                                                                     <td>{{i.enrollment}}</td>
-                                                                    <td>{{i.sem_pro}}</td>
                                                                     <td>{{i.reason}}</td>
+                                                                   
                                                                      <td>  
-                                                                        <a href="show_provisional" class="btn btn-success" style="width:150px;">Accept Request</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        <a href="show_bonafide" class="btn btn-success" style="width:150px;">Accept Request</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                               
-                                                                <a href="/delete_provisional/{{i.id}}" class="btn btn-danger" style="width:150px;">Cancel Request</a>
+                                                                <a href="/delete_bonafide/{{i.id}}" class="btn btn-danger" style="width:150px;">Cancel Request</a>
                                                                         
                                                                     </td>
                                                                 </tr>  
@@ -228,7 +235,7 @@
                                                             {% endif %}
                                                             {% endfor %}
                                                             {% if students.has_next %}
-                                                                <li><a href="?page={{ students.next_page_number }}"> Next </a> </li>
+                                                                <li><a href="?page={{ students.next_page_number }}">  &nbsp;&nbsp;Next </a> </li>
                                                             {% endif %}
                                                     </div>
                                                 </div>
@@ -301,3 +308,15 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

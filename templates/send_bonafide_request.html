@@ -558,6 +558,7 @@
   display: none;
   position: absolute;
   background-color: #f9f9f9;
+  border:2px solid blue;
   min-width: 450px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
@@ -584,6 +585,35 @@
     position: sticky;
  }
 
+ .dropdown1 {
+  position: relative;
+  display: inline-block;
+  font-size:20px;
+ 
+}
+
+.dropdown1-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border:2px solid blue;
+  min-width: 350px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+ 
+}
+
+.dropdown1:hover .dropdown1-content1 {
+  display: block;
+  /* background-color:black; */
+}
+.dropdown1:hover .dropbtn1
+{
+   background-color:brown;
+   padding:5px;
+   color:white;
+}
 
     </style>
 </head>
@@ -624,15 +654,15 @@
                   <div class="dropdown">
                
        
-            {% if user.is_authenticated %}
-            <div class="dropdown">
-                  
-               <button class="dropbtn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{user.username}}</button>
-               <div class="dropdown-content">
-                  <a href="/">Show Request</a> 
-    <a href="/logout/">Logout</a>
-    {% else %}
-    
+                     {% if user.is_authenticated %}
+                     <div class="dropdown1" >
+                           
+                        <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
+                        <div class="dropdown1-content1">
+                        
+             <a href="/logout/">Logout</a>
+             {% else %}
+             
       <a href="/login/">Login</a>
     {% endif %}
                        </nav>
@@ -649,7 +679,7 @@
       } */
    </style>
     {% include "alert.html" %}
-   <form method="POST" action="/store_provisional">
+   <form method="POST" action="/store_bonafide">
       {% csrf_token %}
      <center><h1>Request For Bonafide Certificate Details</h1></center>
    
@@ -677,7 +707,7 @@
      <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
       <label class="col-sm-2 col-form-label">Name : </label> <input type="text" name="name" class="col-sm-4" style="border:2px solid black;" required><br><br>
       <!-- <label class="col-sm-2 col-form-label">Div : </label> <input type="text" name="div" class="col-sm-4" style="border:2px solid black;" required><br><br> -->
-      <label class="col-sm-2 col-form-label">Email : </label> <input type="email" value="{{ user.email }}" class="col-sm-4" style="border:2px solid black; text-transform: lowercase;" required readonly required class="b"><br><br>
+      <!-- <label class="col-sm-2 col-form-label">Email : </label> <input type="email" value="{{ user.email }}" class="col-sm-4" style="border:2px solid black; text-transform: lowercase;" required readonly required class="b"><br><br> -->
       <label class="col-sm-2 col-form-label">Div : </label>   <select class="col-sm-4" name="div" style="border:2px solid black; background-color: aliceblue;color:black;" required>
          <option value="">Select Division...</option>
          <option>A</option>
@@ -691,7 +721,7 @@
       <!-- <label class="col-sm-2 col-form-label">Semester for Provisional Result: </label> <input type="text" name="sem_pro" class="col-sm-4" style="border:2px solid black;" required><br><br> -->
       <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
       <!-- <label class="col-sm-2 col-form-label">Semester : </label> <input type="text" name="sem" class="col-sm-4" style="border:2px solid black;" required><br><br>  -->
-           <label class="col-sm-2 col-form-label">Reason for Bonafide Certificate: </label> <input type="text" name="reason" class="col-sm-4" style="border:2px solid black;" required><br><br>
+      <label class="col-sm-2 col-form-label">Reason for Bonafide Certificate: </label> <input type="text" name="reason" class="col-sm-4" style="border:2px solid black;" required><br><br>
       </center>
       <!-- <div class="col-sm-4">   -->
          <!-- <button type="submit" class="submit" >Submit</button>   -->
