@@ -47,7 +47,7 @@ class Semesters(models.Model):
 class Cource(models.Model):
     cource_id = models.AutoField(primary_key=True, db_column='cource_id')
 #     semester = models.IntegerField()	
-#     prog_id = models.ForeignKey(Programmes, verbose_name=("semester"), on_delete=models.CASCADE)
+    # prog_id = models.ForeignKey(Programmes, verbose_name=("semester"), on_delete=models.CASCADE)
 #    # is_active=models.BooleanField()
 #     created_at=models.DateTimeField(auto_now= True)
 #     updated_at= models.DateTimeField(auto_now_add=True)
@@ -67,7 +67,7 @@ class Request_provisional(models.Model):
     sem_pro=models.IntegerField()
     reason=models.CharField(max_length=500)
     class meta:
-        db_table=('Request_provisional')
+        db_table=('Request_provisional1')
 
 
 class Request_final_result(models.Model):

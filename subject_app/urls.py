@@ -24,7 +24,7 @@ from .views import display_hotel_images,success,hotel_image_view,destroy,edit,up
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('subject',views.subject1),
+    path('subject1/',views.subject1),
     path('subject_storedata',views.subject_storedata),
     path('subject_showdata',views.subject_showdata),
     path('subject_delete/<int:id>', views.subject_destroy), 

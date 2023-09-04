@@ -18,12 +18,15 @@ from subject_app.models import subjectdetail,Request_provisional
 
 from django.contrib.auth.models import User 
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 
 from django.contrib import messages
+from django.contrib.auth.models import Permission
 # Create your views here.
 
 @login_required(login_url='login')
+
+# @permission_required('')
 
 
 def subject1(request):
@@ -177,10 +180,6 @@ def signup(request):
     else:
         form = RegisterForm()
         # return redirect('/login')
-            
-        
-            
-
     return render(request,'registration/register.html',{'form':form})
     
 
@@ -482,12 +481,18 @@ def delete_cource(request, cource_id):
 
 def send_provisional_request(request):
     return render(request,"send_provisional_request.html")
+    # cource_list = Cource.objects.all().order_by('cource_id')
+    # return render(request,"send_provisional_request.html",{'course_list':cource_list})
 
 def send_final_result_request(request):
     return render(request,"send_final_result_request.html")
+    # cource_list = Cource.objects.all().order_by('cource_id')
+    # return render(request,"send_final_result_request.html",{'course_list':cource_list})
 
 def send_bonafide_request(request):
-    return render(request,"send_bonafide_request.html")
+     return render(request,"send_bonafide_request.html")
+    # cource_list = Cource.objects.all().order_by('cource_id')
+    # return render(request,"send_bonafide_request.html",{'course_list':cource_list})
 
 
 
@@ -552,9 +557,10 @@ def admin_login(request):
     
 
 def add_provisional(request):
-    
-     return render(request,'send_provisional_request.html')
-     
+    return render(request,'send_provisional_request.html')
+    # cource_list = Cource.objects.all().order_by('cource_id')
+    # return render(request,"send_provisional_request.html",{'course_list':cource_list})
+
 
          
 def store_provisional(request):
@@ -580,14 +586,13 @@ def store_provisional(request):
             else:  
                 messages.warning(request, 'Request Not Added...',fail_silently=True)
                 return HttpResponseRedirect(request.path_info) 
-    return render(request,'show_provisional.html',{'form':form})  
-    #return redirect('/add_provisional')
+        #return render(request,'show_provisional.html',{'form':form})  
+    return redirect('/add_provisional')
+    
     
 
 
 def show_provisional(request):
-    # students=Request_provisional.objects.all()
-    # return render(request,'show_provisional.html',{'students':students})
     request_list = Request_provisional.objects.all().order_by('enrollment')
     paginator = Paginator(request_list, 3)
     try:
@@ -599,11 +604,8 @@ def show_provisional(request):
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
     return render(request,'hod_view_provisional_request.html',{'students':students})
-    return render(request,'view_provisional_request.html',{'students':students})
-
+   
 def view_provisional_request(request):
-    # students=Request_provisional.objects.all()
-    # return render(request,'show_provisional.html',{'students':students})
     request_list = Request_provisional.objects.all().order_by('enrollment')
     paginator = Paginator(request_list, 3)
     try:
@@ -616,6 +618,7 @@ def view_provisional_request(request):
         students = paginator.page(paginator.num_pages)  
     # return render(request,'hod_view_provisional_request.html',{'students':students})
     return render(request,'view_provisional_request.html',{'students':students})
+
 
 
 
@@ -715,6 +718,7 @@ def delete_final_result1(request, id):
 
 
 def add_bonafide(request):
+    
     return render(request,'send_bonafide_request.html')
      
 
