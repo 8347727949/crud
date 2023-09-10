@@ -5,6 +5,27 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 
+from .models import Person
+
+class PersonForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = Person
+        fields = '__all__'
+
+
+class LoginForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = Person
+        fields = ['username', 'password']
+
+
 class subjectForm(forms.ModelForm):
     class Meta:
         model = subjectdetail

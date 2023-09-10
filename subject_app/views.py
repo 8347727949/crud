@@ -10,6 +10,7 @@ from .models import *
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 
 
 from subject_app.forms import subjectForm,Request_provisional_Form
@@ -24,7 +25,7 @@ from django.contrib import messages
 from django.contrib.auth.models import Permission
 # Create your views here.
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 
 # @permission_required('')
 
@@ -36,6 +37,16 @@ def subject_storedata(request):
     form = subjectForm(request.POST)
     form.save()
     return redirect('/subject_showdata')
+
+def user_storedata(request):
+    form = RegisterForm(request.POST)
+    form.save()
+    return redirect('/user_showdata')
+
+def user_showdata(request):
+    students = Person.objects.all()
+    return render(request,'admin_view_user.html',{'students':students})
+
 
 def subject_showdata(request):
     students = subjectdetail.objects.all()
@@ -65,6 +76,20 @@ def subject_update(request, id):
         #return HttpResponse('update details')
     return render(request, 'admin_subject_edit.html', {'student': student})  
 
+def user_edit(request, id):  
+    student = Person.objects.get(id=id)  
+    return render(request,'password.html', {'student': student})  
+
+def user_update(request, id):     
+    student = Person.objects.get(id=id)  
+    form = RegisterForm(request.POST, instance=student)  
+    if form.is_valid():  
+        form.save()  
+        messages.success(request,"update password successfully")
+        return redirect("user_login")  
+        #return HttpResponse('update details')
+    return render(request, 'password.html', {'student': student})  
+
 
 def search(request):
     # if search.is_valid():  
@@ -77,7 +102,7 @@ def search(request):
 
 
 def home(request):
-    return render(request,'home.html')
+        return render(request,'home.html')
 
 
 # def SignupPage(request):
@@ -170,17 +195,100 @@ def home(request):
     #return HttpResponse('this is logout page')
 
 
-def signup(request):
+# def signup(request):
+#     if request.method == 'POST':
+#         form = RegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request,user)
+#             return redirect('/login')
+#     else:
+#         form = RegisterForm()
+#         # return redirect('/login')
+#     return render(request,'registration/register.html',{'form':form})
+
+
+def register(request):
+    # hobbies=Hobby.objects.all()
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request,user)
-            return redirect('/login')
+           
+            username=request.POST['username']
+            enrollment=request.POST['enrollment']
+            email = request.POST['email'] 
+            password1 = request.POST.get('password1')
+            password2= request.POST.get('password2')
+            
+            if password1!=password2:
+                messages.warning(request, 'Both Password is not match',fail_silently=True)
+                return redirect('/register')
+            
+            
+            
+            # elif email==email and  username==username:
+            #     messages.warning(request, 'username or email already exits',fail_silently=True)
+            #     return redirect('/register')
+
+            # else:
+            #    # messages.warning(request, 'username is already exits',fail_silently=True)
+            #     return redirect('/register')
+
+            person = Person(username=username,enrollment=enrollment,email=email,password1=password1,password2=password2)
+            person.save()
+            # hobby_id = request.POST.getlist('hobbies')  # Get the selected hobby ID
+            # for h in hobby_id:
+            #  hobby = Hobby.objects.get(name=h)  # Retrieve the selected hobby
+            #  person.hobbies.add(hobby)
+
+            return redirect('/')
     else:
-        form = RegisterForm()
-        # return redirect('/login')
-    return render(request,'registration/register.html',{'form':form})
+        form = RegistrationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':           
+        uname = request.POST.get('username')
+        enroll = request.POST.get('enrollment')
+        pwd = request.POST.get('password1')
+        check_user = Person.objects.filter(username=uname,enrollment=enroll,password1=pwd)
+        if check_user:
+            request.session['username'] = uname
+            request.session['enrollment'] = enroll 
+           
+            
+            messages.success(request,'Loggin Successfully',fail_silently=False)
+            return render(request,'home.html')
+        elif uname=='admin' and pwd=='admin':
+            return render(request,'main_admin.html')  
+            #return HttpResponse('admin')
+        elif uname=='hod' and pwd=='hod':
+             return render(request,'main_hod.html')  
+        
+        else:
+            messages.warning(request, 'Please enter valid Username or Password. ',fail_silently=True)
+            
+    form = LoginForm(request.POST) 
+    return render(request, 'login.html',{'form':form})
+
+
+def user_logout(request):
+    try:
+        del request.session['username'] 
+        try:
+            del request.session['enrollment']
+        except:
+            return redirect('/')
+    except:
+        return redirect('/')
+    messages.success(request,'Logout Successfully',fail_silently=True)
+    return redirect('/')
+
+
+def user_details(request):
+    user=request.session['username']
+    person = get_object_or_404(Person, username=user)
+    hobbies=person.hobbies.all()
+    return render(request, 'user_details.html', {'person': person,'hobbies':hobbies})
     
 
 
@@ -429,14 +537,14 @@ def add_cource_func(request):
 
 # Function to edit Programs of PhD Department
 
-def edit_cource(request, cource_id):
-    cource_list = Cource.objects.get(cource_id=cource_id)  
+def edit_cource(request, course_id):
+    cource_list = Cource.objects.get(course_id=course_id)  
     return render(request,'admin_edit_cource.html', {'cource_list':cource_list})
 
 # Funtion to View all the Programs those exist in PhD Secion
 
 def view_cource(request):
-    cource_list = Cource.objects.all().order_by('cource_id')
+    cource_list = Cource.objects.all().order_by('course_id')
     paginator = Paginator(cource_list, 5)
     try:
         page = int(request.GET.get('page','1'))
@@ -449,11 +557,11 @@ def view_cource(request):
     return render(request,'admin_view_cource.html',{'posts':posts}) 
 
 # Code to update the Program
-def update_cource(request,cource_id): 
-    cource_list = Cource.objects.get(cource_id=cource_id)
+def update_cource(request,course_id): 
+    cource_list = Cource.objects.get(course_id=course_id)
     form = CourceForm(request.POST, instance = cource_list) 
     try:
-        cource_data = Cource.objects.get(~Q(cource_id=cource_id),cource_name=str(request.POST['cource_name']))
+        cource_data = Cource.objects.get(~Q(course_id=course_id),cource_name=str(request.POST['cource_name']))
     except Cource.DoesNotExist:
         cource_data = None  
     if cource_data:
@@ -470,8 +578,8 @@ def update_cource(request,cource_id):
 
 #code to delete the Program
 
-def delete_cource(request, cource_id):  
-    cource_list = Cource.objects.get(cource_id=cource_id)  
+def delete_cource(request, course_id):  
+    cource_list = Cource.objects.get(course_id=course_id)  
     cource_list.delete()
     messages.success(request, 'cource Deleted Successfully',fail_silently=True)  
     return redirect("view_cource")
@@ -480,83 +588,39 @@ def delete_cource(request, cource_id):
 
 
 def send_provisional_request(request):
-    return render(request,"send_provisional_request.html")
+     cource_list = Cource.objects.all()
+     return render(request,"send_provisional_request.html",{'course_list':cource_list})
     # cource_list = Cource.objects.all().order_by('cource_id')
     # return render(request,"send_provisional_request.html",{'course_list':cource_list})
 
 def send_final_result_request(request):
-    return render(request,"send_final_result_request.html")
-    # cource_list = Cource.objects.all().order_by('cource_id')
-    # return render(request,"send_final_result_request.html",{'course_list':cource_list})
+    #return render(request,"send_final_result_request.html")
+    cource_list = Cource.objects.all()
+    return render(request,"send_final_result_request.html",{'course_list':cource_list})
 
 def send_bonafide_request(request):
-     return render(request,"send_bonafide_request.html")
-    # cource_list = Cource.objects.all().order_by('cource_id')
-    # return render(request,"send_bonafide_request.html",{'course_list':cource_list})
+     #return render(request,"send_bonafide_request.html")
+     cource_list = Cource.objects.all()
+     return render(request,"send_bonafide_request.html",{'course_list':cource_list})
+
+
+# def view_provisional_request(request):
+#     return render(request,"view_provisional_request.html")
+
+# def view_final_result_request(request):
+#     cource_list = Cource.objects.all()
+#     return render(request,"view_final_result_request.html",{'course_list':cource_list})
+
+# def view_bonafide_request(request):
+#     return render(request,"view_bonafide_request.html")
 
 
 
-def view_provisional_request(request):
-    return render(request,"view_provisional_request.html")
-
-def view_final_result_request(request):
-    return render(request,"view_final_result_request.html")
-
-def view_bonafide_request(request):
-    return render(request,"view_bonafide_request.html")
 
 
-
-
-
-# HOD LOGIN
-
-
-def hod_login(request):
-    # return render(request,"hod_login.html")
-    if request.method=='POST'  :
-         hod_username = request.POST.get('username1')
-         hod_pass22 = request.POST.get('passw1')
-         print(hod_username,hod_pass22)
-         user=authenticate(request,username=hod_username,password=hod_pass22) 
-         if (hod_username == "hod" and hod_pass22 == "1234" ):
-            
-              
-            #   return render(request,'show_provisional.html')
-            return redirect('/show_provisional')
-         else:
-             messages.warning(request, 'Wrong Username or Password',fail_silently=True)
-             return HttpResponseRedirect(request.path_info) 
-            #  return render(request,'hod_login.html')
-             
-             
-    else:
-     return render(request,'hod_login.html')
-    
-def admin_login(request):
-    # return render(request,"hod_login.html")
-    if request.method=='POST'  :
-         admin_username = request.POST.get('username')
-         admin_pass22 = request.POST.get('password')
-         print(admin_username,admin_pass22)
-         user=authenticate(request,username=admin_username,password=admin_pass22) 
-         if (admin_username == "admin@3492" and admin_pass22 == "yash@2411" ):
-            
-              
-            # return render(request,'main_admin.html')
-            return redirect('main_admin')
-            
-         else:
-             messages.warning(request, 'Wrong Username or Password',fail_silently=True)
-             return HttpResponseRedirect(request.path_info) 
-            #  return render(request,'hod_login.html')
-             
-             
-    else:
-     return render(request,'hod_login.html')
-    
 
 def add_provisional(request):
+
     return render(request,'send_provisional_request.html')
     # cource_list = Cource.objects.all().order_by('cource_id')
     # return render(request,"send_provisional_request.html",{'course_list':cource_list})
@@ -567,7 +631,7 @@ def store_provisional(request):
   
     form = Request_provisional_Form(request.POST) 
     try:
-        student_data = Request_provisional.objects.get(enrollment=request.POST.get('enrollment',False))
+        student_data = Request_provisional.objects.get(sem_pro=request.POST.get('sem_pro',False))
         messages.success(request, 'Request Send Successfully',fail_silently=True) 
     except Request_provisional.DoesNotExist:
         student_data = None  
@@ -593,7 +657,9 @@ def store_provisional(request):
 
 
 def show_provisional(request):
-    request_list = Request_provisional.objects.all().order_by('enrollment')
+    request_list = Request_provisional.objects.all().order_by('sem_pro')
+    cource_list = Cource.objects.all()
+    #cource_list = get_object_or_404(Request_final_result, request.session.username)
     paginator = Paginator(request_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -603,24 +669,39 @@ def show_provisional(request):
         students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
-    return render(request,'hod_view_provisional_request.html',{'students':students})
+       
+    return render(request,'hod_view_provisional_request.html',{'students':students,'cource_list':cource_list})
+
    
 def view_provisional_request(request):
-    request_list = Request_provisional.objects.all().order_by('enrollment')
-    paginator = Paginator(request_list, 3)
-    try:
-        page = int(request.GET.get('page','1'))
-    except:
-        page = 1     
-    try:
-        students = paginator.page(page)
-    except(Paginator.EmptyPage , Paginator.InvalidPage):
-        students = paginator.page(paginator.num_pages)  
-    # return render(request,'hod_view_provisional_request.html',{'students':students})
-    return render(request,'view_provisional_request.html',{'students':students})
+    
+    # cource_list = Cource.objects.all()
+    #cource_list = get_object_or_404(Request_final_result, request.session.username)
+    user=request.session['username']
+    enroll=request.session['enrollment']
+    print(user)
+    print(enroll)
+    person = get_object_or_404(Person,username=user,enrollment=enroll)
+    print(person)
+    view_request_list = Request_provisional.objects.filter(pid_id=person.pid)  
+    # request_list = Person.objects.filter(pid=person.pid)  
+    # print(request_list)
+    print(view_request_list)   
+    # print(person)
+    return render(request, 'view_provisional_request.html', {'person':person,'view_request_list':view_request_list})
 
-
-
+    # paginator = Paginator(person, 3)
+    # try:
+    #     page = int(request.GET.get('page','1'))
+    # except:
+    #     page = 1     
+    # try:
+    #     students = paginator.page(page)
+    # except(Paginator.EmptyPage , Paginator.InvalidPage):
+    #     students = paginator.page(paginator.num_pages)  
+       
+    #return render(request,'view_provisional_request.html',{'students':students,'cource_list':cource_list,'request_list':request_list})
+    
 
 def delete_provisional(request, id):  
     program_list = Request_provisional.objects.get(id=id)  
@@ -670,9 +751,8 @@ def store_final_result(request):
 
 
 def show_final_result(request):
-    # students=Request_final_result.objects.all()
-    # return render(request,'hod_view_final_result_request.html',{'students':students})
     request_list = Request_final_result.objects.all().order_by('enrollment')
+    cource_list = Cource.objects.all()
     paginator = Paginator(request_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -682,11 +762,14 @@ def show_final_result(request):
         students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
-    return render(request,'hod_view_final_result_request.html',{'students':students})
+    
+    return render(request,'hod_view_final_result_request.html',{'students':students,'cource_list':cource_list})
 
 
 def view_final_result_request(request):
     request_list = Request_final_result.objects.all().order_by('enrollment')
+    cource_list = Cource.objects.all()
+    #cource_list = get_object_or_404(Request_final_result, request.session.username)
     paginator = Paginator(request_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -696,7 +779,11 @@ def view_final_result_request(request):
         students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
-    return render(request,'view_final_result_request.html',{'students':students})
+       
+    return render(request,'view_final_result_request.html',{'students':students,'cource_list':cource_list})
+
+
+
 
 
 def delete_final_result(request, id):  
@@ -750,9 +837,8 @@ def store_bonafide(request):
 
 
 def show_bonafide(request):
-    # students=Request_final_result.objects.all()
-    # return render(request,'hod_view_bonafide_request.html',{'students':students})
     request_list = Request_bonafide.objects.all().order_by('enrollment')
+    cource_list = Cource.objects.all()
     paginator = Paginator(request_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -762,11 +848,14 @@ def show_bonafide(request):
         students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
-    return render(request,'hod_view_bonafide_request.html',{'students':students})
+    
+    return render(request,'hod_view_bonafide_request.html',{'students':students,'cource_list':cource_list})
 
+  
 
 def view_bonafide_request(request):
     request_list = Request_bonafide.objects.all().order_by('enrollment')
+    cource_list = Cource.objects.all()
     paginator = Paginator(request_list, 3)
     try:
         page = int(request.GET.get('page','1'))
@@ -776,7 +865,8 @@ def view_bonafide_request(request):
         students = paginator.page(page)
     except(Paginator.EmptyPage , Paginator.InvalidPage):
         students = paginator.page(paginator.num_pages)  
-    return render(request,'view_bonafide_request.html',{'students':students})
+    
+    return render(request,'view_bonafide_request.html',{'students':students,'cource_list':cource_list})
 
 
 
@@ -801,3 +891,32 @@ def main_hod(request):
      return render(request,'main_hod.html')
 
 
+def about(request):
+     return render(request,'about.html')
+
+def feedback(request):
+     return render(request,'feedback.html')
+
+def feedback1(request):
+     return render(request,'feedback1.html')
+
+def feedback2(request):
+     return render(request,'feedback2.html')
+
+def feedback3(request):
+     return render(request,'feedback3.html')
+
+def feedback4(request):
+     return render(request,'feedback4.html')
+
+
+
+def password(request):
+     return render(request,'password.html')
+
+
+def blog(request):
+     return render(request,'blog.html')
+
+def blog2(request):
+     return render(request,'blog2.html')

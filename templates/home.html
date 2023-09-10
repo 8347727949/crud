@@ -562,13 +562,13 @@
   
           
         
-        
+        <!-- {%include 'alert.html'%} -->
         
            <nav class="navbar">
             <div class="dropdown">
                   <button class="dropbtn">Provisional Marksheet</button>
                <div class="dropdown-content">
-                  <a href="send_provisional_request">Send Provisional Marksheet Request</a><br>
+                  <a href="/send_provisional_request">Send Provisional Marksheet Request</a><br>
                   <a href="view_provisional_request">View Provisional Marksheet Request</a>
                   </div>
                   </div>
@@ -593,17 +593,17 @@
                   
                            
                 
-            {% if user.is_authenticated %}
+            {% if request.session.username %}
             <div class="dropdown">
                   
-               <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{user.username}}</button>
+               <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{ request.session.username }}</button>
                <div class="dropdown-content">
                   
      
-    <a href="/logout/">Logout</a>
+    <a href="logout">Logout</a>
     {% else %}
     
-      <a href="/login/">Login</a>
+      <a href="/">Login</a>
     {% endif %}
                        </nav>
             
@@ -719,11 +719,11 @@
             <div class="box-container">
                <div class="box">
               <h3>Information</h3>
-                  <a href="#"> <i class="fas fa-angle-right"></i> About</a>
+                  <a href="about"> <i class="fas fa-angle-right"></i> About</a>
                   <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
                   
                  
-                  <a href="#"> <i class="fas fa-angle-right"></i> Feedback</a>
+                  <a href="feedback"> <i class="fas fa-angle-right"></i> Feedback</a>
                
                  
                

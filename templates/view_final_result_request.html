@@ -669,18 +669,20 @@
                      </div>
                   <div class="dropdown">
                
-                    {% if user.is_authenticated %}
-                    <div class="dropdown1" >
-                          
-                       <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
-                       <div class="dropdown1-content1">
-                       
-            <a href="/logout/">Logout</a>
-            {% else %}
-            
-              <a href="/login/">Login</a>
-            {% endif %}
-                       </nav>
+                     {% if request.session.username %}
+                     <div class="dropdown">
+                           
+                        <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{ request.session.username }}</button>
+                        <div class="dropdown-content">
+                           
+              
+                           <a href="logout">Logout</a>
+                           {% else %}
+                           
+                             <a href="/">Login</a>
+             {% endif %}
+                                </nav>
+                    
             
   
         </section>
@@ -720,16 +722,22 @@
                         </thead>
                         <tbody>
                                         
-                            {% for i in students %}
-                            <tr> 
-                                <td>{{i.c_name}}</td>
-                                <td>{{i.sem}}</td>
-                                <td>{{i.name}}</td>
+                           {% for i in students %}
+                           <tr> 
                               
-                                <td>{{i.div}}</td>
-                                <td>{{i.enrollment}}</td>
-                                <td>{{i.sem_pro1}}</td>
+                               {% for j in cource_list %}
+                                   {%if i.course_id_id == j.course_id %}
+                                   <td> {{ j.cource_name }}</td>
+                                   {% endif %}
+                               {% endfor %}
                                
+                               <td>{{i.sem}}</td>
+                               <td>{{i.name}}</td>
+                              
+                               <td>{{i.div}}</td>
+                               <td>{{i.enrollment}}</td>
+                               <td>{{i.sem_pro1}}</td>
+        
                                  <td>  
                                    
                             <a href="/delete_final_result1/{{i.id}}" class="btn btn-danger" style="width:200px; background-color:skyblue;">Cancel Request</a>
@@ -775,13 +783,13 @@
             <div class="box-container">
                <div class="box">
               <h3>Information</h3>
-                  <a href="#"> <i class="fas fa-angle-right"></i> About</a>
-                  <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
-                  
-                 
-                  <a href="#"> <i class="fas fa-angle-right"></i> Feedback</a>
-               
-                 
+              <a href="about"> <i class="fas fa-angle-right"></i> About</a>
+              <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
+              
+             
+              <a href="feedback"> <i class="fas fa-angle-right"></i> Feedback</a>
+           
+             
                
                   <a href="#"> <i class="fas fa-angle-right"></i> Blogs</a>
            

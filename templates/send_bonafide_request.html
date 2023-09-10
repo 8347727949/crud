@@ -654,18 +654,20 @@
                   <div class="dropdown">
                
        
-                     {% if user.is_authenticated %}
-                     <div class="dropdown1" >
+                     {% if request.session.username %}
+                     <div class="dropdown">
                            
-                        <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
-                        <div class="dropdown1-content1">
-                        
-             <a href="/logout/">Logout</a>
+                        <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{ request.session.username }}</button>
+                        <div class="dropdown-content">
+                           
+              
+             <a href="logout">Logout</a>
              {% else %}
              
-      <a href="/login/">Login</a>
-    {% endif %}
-                       </nav>
+               <a href="/">Login</a>
+             {% endif %}
+                                </nav>
+                    
             
   
         </section>
@@ -682,16 +684,16 @@
    <form method="POST" action="/store_bonafide">
       {% csrf_token %}
      <center><h1>Request For Bonafide Certificate Details</h1></center>
-   
-      <label class="col-sm-2 col-form-label">Course : </label>   <select class="col-sm-4" name="c_name" style="border:2px solid black; background-color: aliceblue;color:black;" required>
-         <option value="">Select Cource...</option>
-         <option>IMCA (5 Years Integrated)</option>
-         <option>MSCIT (5 Years Integrated)</option>
-         <option>MCA</option>
-         <!-- {% for i in course_list %}
-            <option value="{{ i.cource_id }}"> {{  i.cource_name }} </option>
-         {% endfor %} -->
-     </select>
+     <label class="col-sm-2 col-form-label">Course : </label>   
+     <select class="col-sm-4" name="course_id" style="border:2px solid black; background-color: aliceblue;color:black;" required NOT NULL>
+        <option value="">Select Cource...</option>
+        <!-- <option>IMCA (5 Years Integrated)</option>
+        <option>MSCIT (5 Years Integrated)</option>
+        <option>MCA</option> -->
+        {% for i in course_list %}
+           <option value="{{  i.course_id }} "> {{  i.cource_name }} </option>
+        {% endfor %}
+    </select>
      <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
       <!-- <label class="col-sm-2 col-form-label">Semester : </label> <input type="text" name="sem" class="col-sm-4" style="border:2px solid black;" required><br><br>  -->
       <label class="col-sm-2 col-form-label">Semester : </label>   <select class="col-sm-4" name="sem" style="border:2px solid black; background-color: aliceblue;color:black;" required>
@@ -740,11 +742,11 @@
             <div class="box-container">
                <div class="box">
               <h3>Information</h3>
-                  <a href="#"> <i class="fas fa-angle-right"></i> About</a>
+                  <a href="about"> <i class="fas fa-angle-right"></i> About</a>
                   <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
                   
                  
-                  <a href="#"> <i class="fas fa-angle-right"></i> Feedback</a>
+                  <a href="feedback"> <i class="fas fa-angle-right"></i> Feedback</a>
                
                  
                

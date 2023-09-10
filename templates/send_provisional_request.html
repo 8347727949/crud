@@ -657,18 +657,20 @@
                   <div class="dropdown">
                
        
-            {% if user.is_authenticated %}
-            <div class="dropdown1" >
-                  
-               <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
-               <div class="dropdown1-content1">
-               
-    <a href="/logout/">Logout</a>
-    {% else %}
-    
-      <a href="/login/">Login</a>
-    {% endif %}
-                       </nav>
+                     {% if request.session.username and request.session.enrollment %}
+                     <div class="dropdown">
+                           
+                        <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{ request.session.username }}</button>
+                        <div class="dropdown-content">
+                           
+              
+                           <a href="logout">Logout</a>
+                           {% else %}
+                           
+                             <a href="/">Login</a>
+             {% endif %}
+                                </nav>
+                    
             
   
         </section>
@@ -686,45 +688,27 @@
       {% csrf_token %}
      <center><h1>Request For Provisional Result Details</h1></center>
    
-      <label class="col-sm-2 col-form-label">Course : </label>   
-      <select class="col-sm-4" name="c_name" style="border:2px solid black; background-color: aliceblue;color:black;" required>
-         <option value="">Select Cource...</option>
-         <option>IMCA (5 Years Integrated)</option>
-         <option>MSCIT (5 Years Integrated)</option>
-         <option>MCA</option>
-        
-     </select>
+     
      <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
-      <!-- <label class="col-sm-2 col-form-label">Semester : </label> <input type="text" name="sem" class="col-sm-4" style="border:2px solid black;" required><br><br>  -->
-      <label class="col-sm-2 col-form-label">Semester : </label>   <select class="col-sm-4" name="sem" style="border:2px solid black; background-color: aliceblue;color:black;" required>
-         <option value="">Select Semester...</option>
-         <option>1</option>
-         <option>2</option>
-         <option>3</option>
-         <option>4</option>
-         <option>5</option>
-         <option>6</option>
-         <option>7</option>
-         <option>8</option>
-         <option>9</option>
-         <option>10</option>
-     </select>
-     <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
-      <label class="col-sm-2 col-form-label">Name : </label> <input type="text" name="name" class="col-sm-4" style="border:2px solid black;" required><br><br>
-      
+<h1><label class="col-sm-2 col-form-label"> {{ request.session.username }} <br>
+   {{ request.session.enrollment }} </label> </h1>
+      <!-- <input type="text" name="name" value="{{ request.session.username }}" class="col-sm-4" style="border:2px solid black;" required><br><br>
+       -->
       <!-- <label class="col-sm-2 col-form-label">Email : </label> <input type="email" value="{{ user.email }}" class="col-sm-4" style="border:2px solid black; text-transform: lowercase;" required readonly required class="b"><br><br> -->
       <!--  <label class="col-sm-2 col-form-label">Div : </label> <input type="text" name="div" class="col-sm-4" style="border:2px solid black;" required><br><br> -->
-      <label class="col-sm-2 col-form-label">Div : </label>   <select class="col-sm-4" name="div" style="border:2px solid black; background-color: aliceblue;color:black;" required>
-         <option value="">Select Division...</option>
-         <option>A</option>
-         <option>B</option>
-         <option>C</option>
-         <option>D</option>
-         <option>E</option>
-     </select>
+      <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
      <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
-      <label class="col-sm-2 col-form-label">Enrollment NO : </label> <input type="text" name="enrollment" class="col-sm-4" style="border:2px solid black;" required>
-      <!-- <label class="col-sm-2 col-form-label">Semester for Provisional Result: </label> <input type="text" name="sem_pro" class="col-sm-4" style="border:2px solid black;" required><br><br> -->
+     <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
+
+     <!-- {% for i in person %} -->
+     <!-- <option value="{{  i.course_id }} "> {{  i.cource_name }} </option> -->
+     <!-- <label class="col-sm-2 col-form-label">Enrollment NO : </label> <input type="text" name="enrollment" value=""class="col-sm-4" style="border:2px solid black;" required>
+      -->
+     <!-- {% endfor %} -->
+     <!-- {% for i in person %} -->
+     
+     <!-- {% endfor %} -->
+     <label class="col-sm-2 col-form-label">Email : </label> <input type="text" name="email" value="{{request_list.email}}" class="col-sm-4" style="border:2px solid black;" required>
       <label class="col-sm-2 col-form-label"> </label> <input type="" name="" class=""  ><br><br> 
       <!-- <label class="col-sm-2 col-form-label">Semester : </label> <input type="text" name="sem" class="col-sm-4" style="border:2px solid black;" required><br><br>  -->
       <label class="col-sm-2 col-form-label">Semester for Provisional Result: </label>   <select class="col-sm-4" name="sem_pro" style="border:2px solid black; background-color: aliceblue;color:black;" required>
@@ -757,12 +741,13 @@
             <div class="box-container">
                <div class="box">
               <h3>Information</h3>
-                  <a href="#"> <i class="fas fa-angle-right"></i> About</a>
-                  <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
-                  
-                 
-                  <a href="#"> <i class="fas fa-angle-right"></i> Feedback</a>
-               
+              <a href="about"> <i class="fas fa-angle-right"></i> About</a>
+              <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
+              
+             
+              <a href="feedback"> <i class="fas fa-angle-right"></i> Feedback</a>
+           
+             
                  
                
                   <a href="#"> <i class="fas fa-angle-right"></i> Blogs</a>

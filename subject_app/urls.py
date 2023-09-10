@@ -27,10 +27,19 @@ urlpatterns = [
     path('subject1/',views.subject1),
     path('subject_storedata',views.subject_storedata),
     path('subject_showdata',views.subject_showdata),
+
+
+     path('user_storedata',views.user_storedata),
+    path('user_showdata',views.user_showdata),
+
     path('subject_delete/<int:id>', views.subject_destroy), 
     
     path('subject_edit/<int:id>', views.subject_edit),  
     path('subject_update/<int:id>', views.subject_update),  
+
+    path('user_edit/<int:id>', views.user_edit),  
+    path('user_update/<int:id>', views.user_update),  
+
     path('search',views.search),
 
     path('image_upload',hotel_image_view,name='image_upload'),
@@ -41,14 +50,20 @@ urlpatterns = [
     path('edit/<int:id>', edit),  
     path('update/<int:id>',update),  
 
-    path('admin_page',views.admin_page),
-    path('signup',views.signup),
+    # path('admin_page',views.admin_page),
+    # path('signup',views.signup),
     # path('',views.LoginPage),
-     path('',views.home,name='home'),
+    # path('',views.home,name='home'),
     path('home',views.home),
     
     # path('logout/',views.LogoutPage),
-    path('main_admin',views.main_admin),
+    # path('main_admin',views.main_admin),
+    # Registration
+    path('register/', views.register, name='register'),
+    # Login and Logout
+    path('', views.user_login, name='login'),
+     path('home', views.user_login, name='login'),
+    path('logout', views.user_logout, name='logout'),
 
 
     path('add_semesters',views.add_semesters,name='add_semesters'), # add semester page
@@ -71,15 +86,16 @@ urlpatterns = [
     path('add_cource',views.add_cource,name='add_cource'), # add semester page
     path('add_cource_func',views.add_cource_func,name='add_cource_func'), # add cource code
     path('view_cource',views.view_cource,name='view_cource'), # view cource
-    path('edit_cource/<int:cource_id>',views.edit_cource), # edit semester page
-    path('update_cource/<int:cource_id>',views.update_cource), # update cource code 
-    path('delete_cource/<int:cource_id>',views.delete_cource), # delete cource code
+    path('edit_cource/<int:course_id>',views.edit_cource), # edit semester page
+    path('update_cource/<int:course_id>',views.update_cource), # update cource code 
+    path('delete_cource/<int:course_id>',views.delete_cource), # delete cource code
 
 
 
    
 
-     path('hod_login',views.hod_login),
+    #  path('hod_login',views.hod_login),
+      path('main_admin',views.main_admin),
       path('main_hod',views.main_hod),
 
      path('add_provisional',views.add_provisional),
@@ -116,4 +132,18 @@ urlpatterns = [
     path('view_bonafide_request',views.view_bonafide_request),
 
 
+
+    path('about',views.about),
+    path('feedback',views.feedback),
+    path('feedback1',views.feedback1),
+    path('feedback2',views.feedback2),
+    path('feedback3',views.feedback3),
+    path('feedback4',views.feedback4),
+
+
+
+    path('blog',views.blog),
+      path('blog2',views.blog2),
+
+ path('password',views.password),
 ]

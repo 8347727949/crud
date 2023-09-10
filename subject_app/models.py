@@ -1,7 +1,36 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+class Person(models.Model):
+    # GENDER_CHOICES = [
+    #     ('M', 'Male'),
+    #     ('F', 'Female'),
+    #     ('O', 'Other'),
+    # ]
+
+    pid= models.AutoField(primary_key=True, db_column='pid',unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    enrollment = models.IntegerField(default='')
+    email = models.EmailField(max_length=100,default='')
+    password1 = models.CharField(max_length=100,default='')
+    password2 = models.CharField(max_length=100,default='')
+    # age = models.IntegerField()
+    # gender=models.CharField(max_length=5, choices=GENDER_CHOICES)
+    # hobbies = models.ManyToManyField('Hobby')
+    # def __str__(self):
+    #     return self.username
+    class meta:
+        db_table=('person')
+
+
+# class Hobby(models.Model):
+#     name = models.CharField(max_length=100)
+# def __str__(self):
+#         return self.name
+
 
 
 class subjectdetail(models.Model):
@@ -45,7 +74,7 @@ class Semesters(models.Model):
 
 
 class Cource(models.Model):
-    cource_id = models.AutoField(primary_key=True, db_column='cource_id')
+    course_id = models.AutoField(primary_key=True, db_column='course_id')
 #     semester = models.IntegerField()	
     # prog_id = models.ForeignKey(Programmes, verbose_name=("semester"), on_delete=models.CASCADE)
 #    # is_active=models.BooleanField()
@@ -58,23 +87,26 @@ class Cource(models.Model):
 
 
 class Request_provisional(models.Model):
-    
-    c_name=models.CharField(max_length=100)
-    sem=models.IntegerField()
-    name=models.CharField(max_length=100)
-    div=models.CharField(max_length=100)
-    enrollment=models.IntegerField()
+   
+    # course_id = models.ForeignKey(Cource, verbose_name=("cource"), on_delete=models.CASCADE)
+    pid = models.ForeignKey(Person, on_delete=models.CASCADE,default='1')
+    # sem=models.IntegerField()
+    # # name=models.CharField(max_length=100)
+    # div=models.CharField(max_length=100)
+    # enrollment=models.IntegerField(default='1')
     sem_pro=models.IntegerField()
     reason=models.CharField(max_length=500)
     class meta:
-        db_table=('Request_provisional1')
-
+        db_table=('Request_provisional')
+    def __str__(self):
+        return self.reason
 
 class Request_final_result(models.Model):
-    
-    c_name=models.CharField(max_length=100)
+    course_id = models.ForeignKey(Cource, verbose_name=("cource"), on_delete=models.CASCADE)
+    pid = models.ForeignKey(Person, on_delete=models.CASCADE)
     sem=models.IntegerField()
     name=models.CharField(max_length=100)
+    # email = models.EmailField(max_length=100,default='')
     div=models.CharField(max_length=100)
     enrollment=models.IntegerField()
     sem_pro1=models.IntegerField(default=1)
@@ -87,7 +119,8 @@ class Request_final_result(models.Model):
 
 class Request_bonafide(models.Model):
     
-    c_name=models.CharField(max_length=100)
+    course_id = models.ForeignKey(Cource, verbose_name=("cource"), on_delete=models.CASCADE)
+    pid = models.ForeignKey(Person, on_delete=models.CASCADE)
     sem=models.IntegerField()
     name=models.CharField(max_length=100)
     div=models.CharField(max_length=100)
@@ -96,3 +129,8 @@ class Request_bonafide(models.Model):
    
     class meta:
         db_table=('Request_bonafide')
+
+
+
+
+

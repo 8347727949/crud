@@ -440,7 +440,7 @@ body {
                   <input type="password" name="password" autocomplete="off" required>
                   <label>Password</label>
               </div> -->
-              {% load crispy_forms_tags %} {% block content %}
+              <!-- {% load crispy_forms_tags %} {% block content %} -->
 
               <form method="post">
                   {% csrf_token %}
@@ -449,8 +449,9 @@ body {
                   <label>Username</label>
                   </div>
                   <div class="user-box">
-                  {{ form.password }}
+                  {{ form.password1 }}
                   <label>Password</label>
+                  
                   </div>
              <center> <button type="submit" style="margin-top:0px">
                   <span></span>
@@ -464,10 +465,10 @@ body {
               <!-- <a href="register" class="reglink">Register</a>
               <br><br>
               <a href="forgotpassword" class="forgot">Forgot Password ?</a> -->
-              <p style="color:white;font-size:15px">If you not register <a href="/signup" class="a1" style="text-decoration: none;">Click Here</a></p>
+              <p style="color:white;font-size:15px">If you not register <a href="/register" class="a1" style="text-decoration: none;">Click Here</a></p>
     
           </form>
-          {% endblock %}
+          <!-- {% endblock %} -->
       </div>
     </center>
 </body>

@@ -1,0 +1,12 @@
+ {% for j in cource_list %}
+                           {%if person.course_id_id == j.course_id %}
+                           <td> {{ j.cource_name }}</td>
+                           {% endif %}
+                       {% endfor %}
+                       <td>{{request_list.sem}}</td>
+                       <td>{{person.name}}</td>
+                            
+                           <td>{{person.div}}</td>
+                           <td>{{person.enrollment}}</td>
+                           <td>{{person.sem_pro}}</td>
+                           <td>{{person.reason}}</td>

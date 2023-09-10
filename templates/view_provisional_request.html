@@ -670,18 +670,20 @@
                   <div class="dropdown">
                
        
-                     {% if user.is_authenticated %}
-                     <div class="dropdown1" >
+                     {% if request.session.username %}
+                     <div class="dropdown">
                            
-                        <button class="dropbtn1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu"> {{user.username}}</button>
-                        <div class="dropdown1-content1">
-                        
-             <a href="/logout/">Logout</a>
-             {% else %}
-             
-               <a href="/login/">Login</a>
+                        <button class="dropbtn">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/static/images/user.jpg" alt="" class="uu">  {{ request.session.username }}</button>
+                        <div class="dropdown-content">
+                           
+              
+                           <a href="logout">Logout</a>
+                           {% else %}
+                           
+                             <a href="/">Login</a>
              {% endif %}
-                       </nav>
+                                </nav>
+                    
             
   
         </section>
@@ -709,11 +711,8 @@
                     <table class="table program-list"> 
                         <thead>
                             <tr>
-                                <th>Course Name</th>
-                                <th>Semester</th>
-                                <th>Name </th>
-                                <th>Div</th>
-                                <th>Enrollment NO</th>
+                              <th>Name</th>
+                                <!-- <th>Enrollment NO</th> -->
                                 <th>Semester for Provisional Result</th>
                                 <th>Reason for Provisional Result</th>
                                 <th>Actions</th>
@@ -721,17 +720,25 @@
                         </thead>
                         
                         <tbody>
-        
-                                {% for i in students %}
-                                <tr> 
-                                    <td>{{i.c_name}}</td>
-                                    <td>{{i.sem}}</td>
-                                    <td>{{i.name}}</td>
-                                    <td>{{i.div}}</td>
-                                    <td>{{i.enrollment}}</td>
-                                    <td>{{i.sem_pro}}</td>
-                                    <td>{{i.reason}}</td>
-                             
+                           <!-- {% for j in cource_list %}
+                           {%if person.course_id_id == j.course_id %}
+                           <td> {{ j.cource_name }}</td>
+                           {% endif %}
+                       {% endfor %}
+                       <td>{{request_list.sem}}</td> -->
+                       {% for i in view_request_list %}
+                              <tr>
+                           <td>{{ request.session.username }}</td>
+                            
+                           <!-- <td>{{person.div}}</td> -->
+                           <!-- <td>{{i.enrollment}}</td> -->
+                           {%if person.pid_id == j.pid %}
+                           <td> {{ j.enrollment }}</td>
+                           {% endif %}
+                           <td>{{i.sem_pro}}</td>
+                           <td>{{i.reason}}</td>
+
+                        
                                   <td>      
                                 <a href="/delete_provisional1/{{i.id}}" class="btn btn-danger" style="width:200px; background-color:skyblue;">Cancel Request</a>
                                         
@@ -739,7 +746,7 @@
                                 </tr>  
                                
                               
-                            {% endfor %}  
+                        {%endfor%}
                         </tbody>
                     </table>
                     </div>
@@ -775,13 +782,13 @@
             <div class="box-container">
                <div class="box">
               <h3>Information</h3>
-                  <a href="#"> <i class="fas fa-angle-right"></i> About</a>
-                  <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
-                  
-                 
-                  <a href="#"> <i class="fas fa-angle-right"></i> Feedback</a>
-               
-                 
+              <a href="about"> <i class="fas fa-angle-right"></i> About</a>
+              <a href="#"> <i class="fas fa-angle-right"></i> Gallery</a>
+              
+             
+              <a href="feedback"> <i class="fas fa-angle-right"></i> Feedback</a>
+           
+             
                
                   <a href="#"> <i class="fas fa-angle-right"></i> Blogs</a>
            

@@ -109,7 +109,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="hod_login" class="dropdown-item">Log Out</a>
+                            <a href="/" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -200,12 +200,19 @@
                                                         
                                                         <tbody>
                                         
+                                                               
+                                                           
+
                                                                 {% for i in students %}
                                                                 <tr> 
-                                                                    <td>{{i.c_name}}</td>
+
+                                                                    {% for j in cource_list %}
+                                                                        {%if i.course_id_id == j.course_id %}
+                                                                        <td> {{ j.cource_name }}</td>
+                                                                        {% endif %}
+                                                                    {% endfor %}
                                                                     <td>{{i.sem}}</td>
                                                                     <td>{{i.name}}</td>
-                                                                  
                                                                     <td>{{i.div}}</td>
                                                                     <td>{{i.enrollment}}</td>
                                                                     <td>{{i.reason}}</td>

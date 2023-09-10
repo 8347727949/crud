@@ -106,7 +106,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="hod_login" class="dropdown-item">Log Out</a>
+                            <a href="/" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -183,11 +183,11 @@
                                                     <table class="table program-list"> 
                                                         <thead>
                                                             <tr>
-                                                                <th>Course Name</th>
-                                                                <th>Semester</th>
+                                                                <!-- <th>Course Name</th>
+                                                                <th>Semester</th> -->
                                                                 <th>Name </th>
                                                               
-                                                                <th>Div</th>
+                                                                <!-- <th>Div</th> -->
                                                                 <th>Enrollment NO</th>
                                                                 <th>Semester for Provisional Result</th>
                                                                 <th>Reason for Provisional Result</th>
@@ -197,16 +197,27 @@
                                                         
                                                         <tbody>
                                         
-                                                                {% for i in students %}
-                                                                <tr> 
-                                                                    <td>{{i.c_name}}</td>
-                                                                    <td>{{i.sem}}</td>
-                                                                    <td>{{i.name}}</td>
+                                                            <!-- {% for i in students %} -->
+                                                            <tr> 
+
+                                                                <!-- {% for j in cource_list %}
+                                                                    {%if i.course_id_id == j.course_id %}
+                                                                    <td> {{ j.cource_name }}</td>
+                                                                    {% endif %}
+                                                                {% endfor %} -->
+                                                                <!-- <td>{{i.sem}}</td>
+                                                                <td>{{i.name}}</td>
                                                                      
                                                                     <td>{{i.div}}</td>
                                                                     <td>{{i.enrollment}}</td>
                                                                     <td>{{i.sem_pro}}</td>
-                                                                    <td>{{i.reason}}</td>
+                                                                    <td>{{i.reason}}</td> -->
+                                                                    <td>{{ request.session.username }}</td>
+                            
+                           <!-- <td>{{person.div}}</td> -->
+                           <td>{{view_request_list.enrollment}}</td>
+                           <td>{{view_request_list.sem_pro}}</td>
+                           <td>{{view_request_list.reason}}</td>
                                                                      <td>  
                                                                         <a href="show_provisional" class="btn btn-success" style="width:150px;">Accept Request</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                               
@@ -216,7 +227,7 @@
                                                                 </tr>  
                                                                
                                                               
-                                                            {% endfor %}  
+                                                            <!-- {% endfor %}   -->
                                                         </tbody>
                                                     </table>
                                                     </div>
